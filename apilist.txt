@@ -1,0 +1,199 @@
+Email Password Authentication
+Access Token Link - /api/token/
+Refresh Token Link - /api/token/refresh/
+
+
+
+Category API
+
+GET Requests
+
+/api/category/
+Return list of all category
+[
+    {
+        "id": 1,
+        "name": "Rings",
+        "level": "lvl1",
+        "parent_category": null
+    },
+    {
+        "id": 8,
+        "name": "Test Category 6",
+        "level": "lvl2",
+        "parent_category": 1
+    }
+]
+
+/api/category/{ id of category_obj }
+Returns all the details of that category object.
+{
+    "id": 8,
+    "name": "Test Category 6",
+    "level": "lvl2",
+    "parent_category": 1
+}
+
+
+
+Create a new category
+link - /api/category/
+type - POST
+Payload -
+If level value is lvl1, then parent_category is null.
+If Level is higher then parent_category points to the id of the category
+{
+    "name":"Test Category 6",
+    "level":"lvl1",
+    "parent_category": null
+}
+{
+    "name":"Test Category 6",
+    "level":"lvl2",
+    "parent_category":1
+}
+
+
+Update a category.
+link - /api/category/{ id of category_obj }
+type - PUT
+Payload -
+If level value is lvl1, then parent_category is null.
+If Level is higher then parent_category points to the id of the category
+{
+    "name":"Test Category 6",
+    "level":"lvl2",
+    "parent_category": 1
+}
+
+
+Delete a category.
+link - /api/category/{ id of category_obj }
+type - DELETE
+
+
+
+
+
+Filter Options API
+
+link - /api/filteroptions/
+
+GET - list of all the Main Filter Options
+
+POST - Creating a filter
+Payload -
+This will create no filter option items
+{
+    "title":"Test Filter Option",
+    "display":true
+}
+This will create filter with items in it.
+{
+    "title":"New Test Filter Option ",
+    "display":false,
+    "filter_option_items": [
+            {
+                "icon": "linkofimageicon",
+                "name": "Test Filter Option Item 1",
+                "filter":any random integer
+            },
+            {
+                "icon": "NoIconRequired",
+                "name": "Test Filter Option Item 2",
+                "filter":any random integer
+            }
+        ]
+}
+
+
+link - /api/filteroptions/{ id of filter_obj }
+GET - details of selected Filter Option
+PUT - can update the title and display property of the main filter option.
+{
+    "title":"New Updated Test Filter Option ",
+    "display":false
+}
+DELETE :- deletes the particular category and all items of it.
+
+
+
+Filter Option Items API
+
+link- /api/filteroptionitems/
+GET - list of all the Filter Options Items
+POST- Creating an filter option item
+Payload
+{
+    "icon": "NoIconRequired",
+    "name": "Unisex",
+    "filter": id of the filter object.
+}
+
+link - /api/filteroptionitems/{ id of filter_item_obj }
+PUT - Update the selected filter item
+{
+    "icon": "NoIconRequired",
+    "name": "Unisex",
+    "filter": id of the filter object.
+}
+DELETE - Delete the selected filter item
+
+
+
+Product API
+
+link - /api/products/
+GET - list of all the products.
+POST - Create a product.
+Payload
+{
+        "product_images": [
+            {
+                "link": "asdfghjhgfdszfxgchjlkjhgfdzxcvbnjklhgf"
+            },
+            {
+                "link": "asdfghjhgfdszfxgchjlkjhgfdzxcvbnjklhgf"
+            },
+            {
+                "link": "asdfghjhgfdszfxgchjlkjhgfdzxcvbnjklhgf"
+            },
+            {
+                "link": "asdfghjhgfdszfxgchjlkjhgfdzxcvbnjklhgf"
+            }
+        ],
+        "title": "Checking product_images 4",
+        "mrp": 1200,
+        "selling_price": 1200,
+        "short_description": "This is short description for the product.",
+        "long_description": "This is a long description for the product.",
+        "shipping_details": "This is shipping details.",
+        "return_details": "This is the return details.",
+        "avg_rating": 3,
+        "total_reviews": 100,
+        "on_discount": false,
+        "discount_value": 0,
+        "category": 1,
+        "tags": [1]  It should not be empty.
+}
+
+
+link - /api/products/{ id of product_obj }
+GET - returns all the details of this product
+PUT - Updates the product details apart from product images.
+Payload
+{
+  "title": "Checking product_images 4",
+  "mrp": 1200,
+  "selling_price": 1200,
+  "short_description": "This is short description for the product.",
+  "long_description": "This is a long description for the product.",
+  "shipping_details": "This is shipping details.",
+  "return_details": "This is the return details.",
+  "avg_rating": 3,
+  "total_reviews": 100,
+  "on_discount": false,
+  "discount_value": 0,
+  "category": 1,
+  "tags": [1]
+}
