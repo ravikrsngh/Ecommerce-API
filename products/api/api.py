@@ -23,9 +23,9 @@ class ProductAPI(viewsets.ModelViewSet):
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
     permission_classes = [SafeMethodsRequestPermission]
-    filter_backends = [DjangoFilterBackend]
+    filter_backends = [DjangoFilterBackend,filters.SearchFilter]
     filterset_fields = ['category', 'tags']
-    search_fields = ['category__name', 'title']
+    search_fields = ['^category__name', '^title']
 
 
 class FilterOptionAPI(viewsets.ModelViewSet):
@@ -44,4 +44,12 @@ class FilterOptionAPI(viewsets.ModelViewSet):
 class FilterOptionItemsAPI(viewsets.ModelViewSet):
     queryset = FilterOptionItems.objects.all()
     serializer_class = FilterOptionItemsSerializer
+    permission_classes = [SafeMethodsRequestPermission]
+
+
+class WishlistAPI(viewsets.ModelViewSet):
+    def get_queryset(self):
+        user = self.request.user
+        return Wishlist.objects.filter(user=user)
+    serializer_class = WishlistSerializer
     permission_classes = [SafeMethodsRequestPermission]

@@ -4,7 +4,8 @@ from rest_framework.decorators import api_view
 
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from rest_framework_simplejwt.views import TokenObtainPairView
-
+from rest_framework import viewsets
+from .serializers import *
 
 
 class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
@@ -31,3 +32,8 @@ def getRoutes(request):
         '/api/token/refresh'
     ]
     return Response(routes)
+
+
+class RegisterUserAPI(viewsets.ModelViewSet):
+    queryset = User.objects.all()
+    serializer_class = RegisterUserSerializer
