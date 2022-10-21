@@ -21,4 +21,4 @@ urlpatterns = [
     path('',include('users.api.urls')),
     path('api/',include('products.api.routers')),
     path('api/',include('wishlist_cart.api.routers')),
-]
+] 
