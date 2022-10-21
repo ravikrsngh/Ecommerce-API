@@ -67,6 +67,7 @@ class ProductSerializer(serializers.ModelSerializer):
         print(validated_data)
         product_images = list(instance.product_images.all())
         product_images_data = validated_data.pop('product_images')
+        tags = validated_data.pop('tags')
         instance.title = validated_data.get('title')
         instance.mrp = validated_data.get('mrp')
         instance.selling_price = validated_data.get('selling_price')
@@ -79,6 +80,8 @@ class ProductSerializer(serializers.ModelSerializer):
         instance.total_reviews = validated_data.get('total_reviews')
         instance.on_discount = validated_data.get('on_discount')
         instance.discount_value = validated_data.get('discount_value')
+        for tag in tags:
+            instance.tags.add(tag)
         instance.save()
         for product_image_data in product_images_data:
             product_image = product_images.pop(0)
@@ -92,7 +95,57 @@ class ProductSerializer(serializers.ModelSerializer):
 
 
 
-class WishlistSerializer(serializers.ModelSerializer):
+class ReviewSerializer(serializers.ModelSerializer):
+
+    def create(self, validated_data):
+        request = self.context.get('request')
+        print(request.user)
+        instance = Review.objects.create(user=request.user, **validated_data)
+        all_reviews = Review.objects.filter(product=instance.product).count()
+        instance.product.total_reviews = all_reviews
+        instance.product.save()
+        return instance
+
     class Meta:
-        model = Wishlist
+        model = Review
+        fields = ['product','name','review']
+
+
+
+class ProductDetailsSerializer(serializers.ModelSerializer):
+
+    product_images = ProductImageSerializer(many=True)
+
+    reviews = serializers.SerializerMethodField()
+
+    related_products = serializers.SerializerMethodField()
+
+    category = CategorySerializer(many=False)
+
+    def get_reviews(self,instance):
+        all_reviews = Review.objects.filter(product = instance).order_by("-id")
+        if len(all_reviews) > 4:
+            all_reviews = all_reviews[:4]
+        serializer = ReviewSerializer(all_reviews,many=True)
+        return serializer.data
+
+    def get_related_products(self, instance):
+        all_related_products = list(set(Product.objects.filter(category = instance.category).filter(tags__in=instance.tags.all()).exclude(id=instance.id)))
+        if len(all_related_products) > 6:
+            all_reviews = all_related_products[:6]
+        serializer = ProductSerializer(all_related_products,many=True)
+        return serializer.data
+
+    class Meta:
+        model = Product
         fields = '__all__'
+
+
+class ProductCardSerializer(serializers.ModelSerializer):
+
+    product_images = ProductImageSerializer(many=True)
+    category = CategorySerializer(many=False)
+
+    class Meta:
+        model = Product
+        fields = ['id','title','mrp','category','selling_price','total_reviews','product_images']

@@ -1,3 +1,11 @@
+User Register API
+link - api/registeruser/
+payload-
+{
+
+}
+
+
 Email Password Authentication
 Access Token Link - /api/token/
 Refresh Token Link - /api/token/refresh/

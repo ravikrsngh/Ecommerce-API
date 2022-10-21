@@ -6,5 +6,5 @@ router.register(r'category', CategoryAPI)
 router.register(r'products', ProductAPI)
 router.register(r'filteroptions', FilterOptionAPI)
 router.register(r'filteroptionitems', FilterOptionItemsAPI)
-router.register(r'wishlist',WishlistAPI,basename="Wishlist")
+router.register(r'review', ReviewAPI)
 urlpatterns = router.urls

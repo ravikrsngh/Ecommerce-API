@@ -3,8 +3,8 @@ from .serializers import *
 from rest_framework.decorators import action
 from rest_framework.response import Response
 from ecommerce.permissions import *
-from rest_framework import filters
-from django_filters.rest_framework import DjangoFilterBackend
+from rest_framework.filters import SearchFilter
+from django_filters import rest_framework as filters
 
 
 class CategoryAPI(viewsets.ModelViewSet):
@@ -19,19 +19,49 @@ class CategoryAPI(viewsets.ModelViewSet):
         return Response('Worked')
 
 
+
+class ProductFilter(filters.FilterSet):
+    tags = filters.ModelMultipleChoiceFilter(
+        field_name='tags__name',
+        to_field_name='name',
+        queryset=FilterOptionItems.objects.all(),
+        conjoined=False
+    )
+    category = filters.ModelMultipleChoiceFilter(
+        field_name='category__name',
+        to_field_name='name',
+        queryset=Category.objects.all(),
+    )
+    selling_price = filters.RangeFilter()
+
+    class Meta:
+        model = Product
+        fields = ['category', 'tags','selling_price']
+
 class ProductAPI(viewsets.ModelViewSet):
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
     permission_classes = [SafeMethodsRequestPermission]
-    filter_backends = [DjangoFilterBackend,filters.SearchFilter]
-    filterset_fields = ['category', 'tags']
-    search_fields = ['^category__name', '^title']
+    filter_backends = [filters.DjangoFilterBackend,SearchFilter]
+    #filterset_fields = ['category', 'tags']
+    filterset_class = ProductFilter
+    search_fields = ['category__name', 'title','tags__name']
+
+    @action(methods=['get'], detail=True)
+    def get_product_details(self,request,pk=None):
+        product = self.get_object()
+        print(product)
+        serializer = ProductDetailsSerializer(product,many=False)
+        return Response(serializer.data)
+
 
 
 class FilterOptionAPI(viewsets.ModelViewSet):
     queryset = FilterOptions.objects.all()
     serializer_class = FilterOptionsSerializer
     permission_classes = [SafeMethodsRequestPermission]
+    filter_backends = [filters.DjangoFilterBackend,SearchFilter]
+    filterset_fields = ['display']
 
     # def get_serializer_class(self):
     #
@@ -47,9 +77,8 @@ class FilterOptionItemsAPI(viewsets.ModelViewSet):
     permission_classes = [SafeMethodsRequestPermission]
 
 
-class WishlistAPI(viewsets.ModelViewSet):
-    def get_queryset(self):
-        user = self.request.user
-        return Wishlist.objects.filter(user=user)
-    serializer_class = WishlistSerializer
+
+class ReviewAPI(viewsets.ModelViewSet):
+    queryset = Review.objects.all()
+    serializer_class = ReviewSerializer
     permission_classes = [SafeMethodsRequestPermission]

@@ -1,5 +1,5 @@
 from django.db import models
-from django.contrib.auth.models import User
+from users.models import *
 
 
 category_level_choices = [
@@ -12,6 +12,7 @@ category_level_choices = [
 
 class Category(models.Model):
     name = models.CharField(max_length=50)
+    img=models.TextField(default="")
     parent_category = models.ForeignKey("self", on_delete=models.CASCADE, null=True, blank=True)
     level = models.CharField(max_length=10,choices=category_level_choices,default='lvl1')
 
@@ -63,10 +64,11 @@ class ProductImages(models.Model):
         return self.product.title
 
 
-
-class Wishlist(models.Model):
-    user = models.ForeignKey(User,on_delete=models.CASCADE)
+class Review(models.Model):
+    user = models.ForeignKey(CustomUser,on_delete=models.CASCADE)
     product = models.ForeignKey(Product,on_delete=models.CASCADE)
+    name = models.CharField(max_length=50)
+    review = models.CharField(max_length=150)
 
     def __str__(self):
-        return self.user.username
+        return self.name
