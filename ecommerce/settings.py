@@ -16,8 +16,6 @@ import mimetypes
 import os
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-mimetypes.add_type("text/css", ".css", True)
-
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
@@ -26,9 +24,9 @@ mimetypes.add_type("text/css", ".css", True)
 SECRET_KEY = 'django-insecure-^ga=w4=m=(6(!8+%o+$x9rs&5uf4um!u5z$mzk7of0y0^a_z2*'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
-ALLOWED_HOSTS = ['43.206.118.166','ec2-43-206-118-166.ap-northeast-1.compute.amazonaws.com']
+ALLOWED_HOSTS = ['127.0.0.1','43.206.118.166','ec2-43-206-118-166.ap-northeast-1.compute.amazonaws.com','tawisa.com']
 
 
 # Application definition
