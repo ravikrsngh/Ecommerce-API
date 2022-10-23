@@ -15,12 +15,20 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path,include
+from django.conf.urls import url
 from app import views
+from django.conf import settings
+from django.conf.urls.static import static
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('',views.index,name='index'),
-    path('',include('users.api.urls')),
+    path('',views.index),
+    path('products/',views.index),
+    path('wishlist/',views.index),
+    path('cart/',views.index),
+    path('my-account/',views.index),
+    path('products/<int:pk>/',views.indexpk),
+    path('api/',include('users.api.urls')),
     path('api/',include('products.api.routers')),
     path('api/',include('wishlist_cart.api.routers')),
-]
+] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
