@@ -16,4 +16,5 @@ sqlparse==0.4.2
 typing_extensions==4.3.0
 tzdata==2022.4
 virtualenv==20.14.1
+whitenoise==6.2.0
 zipp==3.9.0
