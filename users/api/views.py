@@ -34,7 +34,6 @@ def test(request):
 
 class RegisterUserAPI(viewsets.ModelViewSet):
     queryset = CustomUser.objects.all()
-    permission_classes =[IsAuthenticated]
 
     def get_serializer_class(self):
         if self.action == "update":
