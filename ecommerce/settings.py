@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-^ga=w4=m=(6(!8+%o+$x9rs&5uf4um!u5z$mzk7of0y0^a_z2*
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['127.0.0.1','tawisa.com','tawisa.in','tawisa.ap-south-1.elasticbeanstalk.com']
+ALLOWED_HOSTS = ['127.0.0.1','tawisa.com','tawisa.in','tawisa.ap-south-1.elasticbeanstalk.com','www.tawisa.com']
 
 
 # Application definition
