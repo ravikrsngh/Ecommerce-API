@@ -31,10 +31,16 @@ class RegisterUserSerializer(serializers.ModelSerializer):
 
 
 class UpdateUserSerializer(serializers.ModelSerializer):
+    profile_pic = serializers.ImageField(required=False)
     class Meta:
         model = CustomUser
-        fields = ('email', 'first_name','phone_number','profile_pic','address','phone_number','date_of_birth')
+        fields = ('email', 'first_name','phone_number','profile_pic','address','date_of_birth')
 
+
+class UserDetailSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = CustomUser
+        exclude = ('password',)
 
 class AddressSerializer(serializers.ModelSerializer):
 

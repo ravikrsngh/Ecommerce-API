@@ -25,7 +25,6 @@ SECRET_KEY = 'django-insecure-^ga=w4=m=(6(!8+%o+$x9rs&5uf4um!u5z$mzk7of0y0^a_z2*
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
-
 ALLOWED_HOSTS = ['127.0.0.1','tawisa.com','tawisa.in','tawisa.ap-south-1.elasticbeanstalk.com','www.tawisa.com']
 
 
@@ -182,9 +181,22 @@ STATIC_ROOT = os.path.join(BASE_DIR, "static")
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR,'dist','assets'),
 ]
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
+
+# AWS Configurations
+
+DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+
+AWS_ACCESS_KEY_ID = "AKIA4OVVL7LO4JT6ADX2"
+AWS_SECRET_ACCESS_KEY = "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"
+AWS_STORAGE_BUCKET_NAME = "elasticbeanstalk-ap-south-1-856152603357"
+AWS_QUERYSTRING_AUTH =  False

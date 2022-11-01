@@ -3,7 +3,7 @@ from .serializers import *
 from rest_framework.decorators import action
 from rest_framework.response import Response
 from ecommerce.permissions import *
-from rest_framework.filters import SearchFilter
+from rest_framework.filters import SearchFilter,OrderingFilter
 from django_filters import rest_framework as filters
 
 
@@ -38,14 +38,18 @@ class ProductFilter(filters.FilterSet):
         model = Product
         fields = ['category', 'tags','selling_price']
 
+
+
 class ProductAPI(viewsets.ModelViewSet):
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
     permission_classes = [SafeMethodsRequestPermission]
-    filter_backends = [filters.DjangoFilterBackend,SearchFilter]
+    filter_backends = [filters.DjangoFilterBackend,SearchFilter,OrderingFilter]
     #filterset_fields = ['category', 'tags']
     filterset_class = ProductFilter
-    search_fields = ['category__name', 'title','tags__name']
+    search_fields = ['$category__name', '$title','$tags__name']
+    ordering_fields = ['id', 'price']
+    ordering = ['-id']
 
     @action(methods=['get'], detail=True)
     def get_product_details(self,request,pk=None):

@@ -20,7 +20,7 @@ class CustomUserAdmin(UserAdmin):
             'fields': ('last_login', 'date_joined')
         }),
         ('Additional info', {
-            'fields': ('phone_number','date_of_birth','address')
+            'fields': ('phone_number','date_of_birth','address','profile_pic')
         })
     )
 

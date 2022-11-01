@@ -16,6 +16,12 @@ class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
 
         # Add custom claims
         token['username'] = user.username
+        token['name'] = user.first_name
+        try:
+            token['profile_pic'] = user.profile_pic.url
+        except Exception as e:
+            token['profile_pic'] = ""
+
         # ...
 
         return token
@@ -37,8 +43,11 @@ class RegisterUserAPI(viewsets.ModelViewSet):
 
     def get_serializer_class(self):
         if self.action == "update":
-            print("Changing serializer class")
             return UpdateUserSerializer
+        elif self.action == "list":
+            return UserDetailSerializer
+        elif self.action == "retrieve":
+            return UserDetailSerializer
         else:
             return RegisterUserSerializer
 

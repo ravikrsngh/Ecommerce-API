@@ -3,11 +3,15 @@ from django.contrib.auth.models import AbstractUser
 from django.contrib.auth.base_user import BaseUserManager
 # Create your models here.
 
+
+def user_directory_path(instance,filename):
+    return 'media/ProfilePictures/user_{0}/{1}'.format(instance.email, filename)
+
 class CustomUser(AbstractUser):
     phone_number = models.CharField(max_length=15)
     date_of_birth = models.CharField(max_length=10,default="")
     address = models.TextField(default="")
-    profile_pic = models.TextField(default="")
+    profile_pic = models.ImageField(upload_to = user_directory_path,null=True,blank=True)
     email = models.EmailField(unique=True, max_length=254)
 
     def __str__(self):
