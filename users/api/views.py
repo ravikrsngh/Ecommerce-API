@@ -60,3 +60,13 @@ class UserAddressAPI(viewsets.ModelViewSet):
     def get_queryset(self):
         user = self.request.user
         return UserAddress.objects.filter(user=user)
+
+
+class RecentSearchAPI(viewsets.ModelViewSet):
+    queryset = RecentSearch.objects.all()
+    serializer_class = RecentSearchSerializer
+    permission_classes = [IsAuthenticated]
+
+    def get_queryset(self):
+        user = self.request.user
+        return RecentSearch.objects.filter(user=user)

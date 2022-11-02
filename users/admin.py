@@ -26,3 +26,4 @@ class CustomUserAdmin(UserAdmin):
 
 admin.site.register(CustomUser, CustomUserAdmin)
 admin.site.register(UserAddress)
+admin.site.register(RecentSearch)

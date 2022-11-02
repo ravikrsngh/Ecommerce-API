@@ -52,3 +52,16 @@ class AddressSerializer(serializers.ModelSerializer):
     class Meta:
         model = UserAddress
         exclude = ('user','receive_sms_notitication',)
+
+
+class RecentSearchSerializer(serializers.ModelSerializer):
+
+    def create(self, validated_data):
+        request = self.context.get('request')
+        print(request.user)
+        instance = RecentSearch.objects.create(user=request.user,name=validated_data.get('name'))
+        return instance
+
+    class Meta:
+        model = RecentSearch
+        fields = ['name']

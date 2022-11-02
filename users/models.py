@@ -47,3 +47,11 @@ class UserAddress(models.Model):
 
     def __str__(self):
         return self.user.email
+
+
+class RecentSearch(models.Model):
+    user = models.ForeignKey(CustomUser,on_delete=models.CASCADE)
+    name = models.CharField(max_length=50)
+
+    def __str__(self):
+        return self.name
