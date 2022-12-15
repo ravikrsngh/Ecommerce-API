@@ -21,6 +21,8 @@ from django.conf import settings
 from django.conf.urls.static import static
 
 urlpatterns = [
+    path('jet/', include('jet.urls', 'jet')),
+    path('jet/dashboard/', include('jet.dashboard.urls', 'jet-dashboard')),
     path('admin/', admin.site.urls),
     path('',views.index),
     path('products/',views.index),
@@ -31,6 +33,8 @@ urlpatterns = [
     path('api/',include('users.api.urls')),
     path('api/',include('products.api.routers')),
     path('api/',include('wishlist_cart.api.routers')),
+    path('api/',include('orders.api.routers')),
+    path('editor/', include('django_summernote.urls')),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 
 if settings.DEBUG:

@@ -14,6 +14,7 @@ from pathlib import Path
 from datetime import timedelta
 import mimetypes
 import os
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -24,28 +25,39 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-^ga=w4=m=(6(!8+%o+$x9rs&5uf4um!u5z$mzk7of0y0^a_z2*'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 ALLOWED_HOSTS = ['127.0.0.1','tawisa.com','tawisa.in','tawisa.ap-south-1.elasticbeanstalk.com','www.tawisa.com']
 
+
+import mimetypes
+mimetypes.add_type("application/javascript", ".js", True)
+
+DEBUG_TOOLBAR_CONFIG = {
+    'INTERCEPT_REDIRECTS': False,
+}
 
 # Application definition
 
 INSTALLED_APPS = [
+    'jet.dashboard',
+    'jet',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'app',
     'users',
     'products',
     'wishlist_cart',
+    'orders',
     'django_filters',
     'rest_framework',
     'rest_framework_simplejwt.token_blacklist',
     'corsheaders',
     'webpack_loader',
+    'django_summernote',
+    'app',
 ]
 
 REST_FRAMEWORK = {
@@ -159,6 +171,7 @@ AUTH_PASSWORD_VALIDATORS = [
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
+
 AUTH_USER_MODEL = 'users.CustomUser'
 
 # Internationalization
@@ -184,6 +197,7 @@ STATICFILES_DIRS = [
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
+X_FRAME_OPTIONS = 'SAMEORIGIN'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
@@ -196,7 +210,109 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
 
-AWS_ACCESS_KEY_ID = "AKIA4OVVL7LO4JT6ADX2"
-AWS_SECRET_ACCESS_KEY = "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"
+AWS_ACCESS_KEY_ID = "AKIA4OVVL7LOUSEGRGHN"
+AWS_SECRET_ACCESS_KEY = "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"
 AWS_STORAGE_BUCKET_NAME = "elasticbeanstalk-ap-south-1-856152603357"
 AWS_QUERYSTRING_AUTH =  False
+
+
+SUMMERNOTE_CONFIG = {
+    'height': '280',
+    'summernote': {
+        'toolbar': [
+            ['para', ['ul']],
+        ],
+    }
+}
+
+JET_SIDE_MENU_COMPACT = True
+
+
+
+
+JET_SIDE_MENU_ITEMS = [  # A list of application or custom item dicts
+    {'label': "Set Prices", 'items': [
+        {'label': 'Gold Prices','name': 'products.goldpurity'},
+        {'label': 'Diamond Prices','name': 'products.diamondpurity'},
+    ]},
+    {'label': "Orders", 'items': [
+        {'name': 'orders.order'},
+        {'label': 'Order Tracking','url':'/admin/orders/order/order-tracking'},
+    ]},
+    {'label': "Products", 'items': [
+        {'label':'Product Categories','name': 'products.category'},
+        {'label':'Filter Option Categories','name': 'products.filteroptions'},
+        {'label':'Filter Option Items','name': 'products.filteroptionitems'},
+        {'label':'Products','name': 'products.product'},
+        {'label':'Product Images','name': 'products.productimages'},
+        {'label':'Product Reviews','name': 'products.review'},
+    ]},
+    {'label': "Users", 'items': [
+        {'label':'Users','name': 'users.customuser'},
+        {'label':'RecentSearch','name': 'users.recentsearch'},
+    ]},
+    {'label': "Users", 'items': [
+        {'label':'Users','name': 'users.customuser'},
+        {'label':'WishList','name': 'wishlist_cart.wishlist'},
+        {'label':'Cart','name': 'wishlist_cart.cart'},
+        {'label':'RecentSearch','name': 'users.recentsearch'},
+    ]},
+]
+
+JAZZMIN_SETTINGS = {
+    "custom_links": {
+    "orders":[
+        {"name": "Order Tracking", "url": "admin:custom_view", "icon": "fas fa-map"},
+    ],
+    "apps":[
+        {"name": "Order Tracking", "url": "admin:custom_view", "icon": "fas fa-map"},
+    ]
+    },
+
+    "icons": {
+        "users.CustomUser": "fas fa-user",
+        "users.RecentSearch": "fas fa-search",
+        "orders.Order":"fas fa-shopping-bag",
+        "products.ProductImages":"fas fa-image",
+        "products.Product":"fas fa-gem",
+        "products.Category":"fas fa-sitemap",
+        "products.FilterOptions":"fas fa-filter",
+        "products.FilterOptionItems":"fas fa-tags",
+        "products.Review":"fas fa-sticky-note"
+    },
+    "show_ui_builder":False,
+    "custom_css": 'common.css',
+    "related_modal_active": True,
+}
+
+JAZZMIN_UI_TWEAKS = {
+    "navbar_small_text": False,
+    "footer_small_text": False,
+    "body_small_text": False,
+    "brand_small_text": False,
+    "brand_colour": "#000",
+    "accent": "accent-primary",
+    "navbar": "navbar-white navbar-light",
+    "no_navbar_border": False,
+    "navbar_fixed": False,
+    "layout_boxed": False,
+    "footer_fixed": False,
+    "sidebar_fixed": False,
+    "sidebar": "sidebar-light-navy",
+    "sidebar_nav_small_text": False,
+    "sidebar_disable_expand": False,
+    "sidebar_nav_child_indent": False,
+    "sidebar_nav_compact_style": False,
+    "sidebar_nav_legacy_style": False,
+    "sidebar_nav_flat_style": False,
+    "theme": "default",
+    "dark_mode_theme": None,
+    "button_classes": {
+        "primary": "btn-primary",
+        "secondary": "btn-secondary",
+        "info": "btn-info",
+        "warning": "btn-warning",
+        "danger": "btn-danger",
+        "success": "btn-success"
+    }
+}

@@ -38,9 +38,10 @@ class FilterOptionsSerializer(serializers.ModelSerializer):
 
 
 class ProductImageSerializer(serializers.ModelSerializer):
+    img = serializers.ImageField(required=False)
     class Meta:
         model = ProductImages
-        fields = ['id','link']
+        fields = ['id','img']
 
 
 class ProductSerializer(serializers.ModelSerializer):
@@ -111,6 +112,17 @@ class ReviewSerializer(serializers.ModelSerializer):
         fields = ['product','name','review']
 
 
+class GoldPuritySerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = GoldPurity
+        fields = '__all__'
+
+class DiamondPuritySerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = DiamondPurity
+        fields = '__all__'
 
 class ProductDetailsSerializer(serializers.ModelSerializer):
 
@@ -121,6 +133,12 @@ class ProductDetailsSerializer(serializers.ModelSerializer):
     related_products = serializers.SerializerMethodField()
 
     category = CategorySerializer(many=False)
+
+    gold_purity = GoldPuritySerializer(many=False)
+
+    diamond_purity = DiamondPuritySerializer(many=False)
+
+    material_prices = serializers.SerializerMethodField()
 
     def get_reviews(self,instance):
         all_reviews = Review.objects.filter(product = instance).order_by("-id")
@@ -135,6 +153,16 @@ class ProductDetailsSerializer(serializers.ModelSerializer):
             all_reviews = all_related_products[:6]
         serializer = ProductSerializer(all_related_products,many=True)
         return serializer.data
+
+    def get_material_prices(self,instance):
+        gold_price = int(float(instance.gold_weight)*instance.gold_purity.price)
+        diamond_price = int(float(instance.diamond_weight)*instance.diamond_purity.price)
+
+        return {
+            "gold_price":gold_price,
+            "diamond_price":diamond_price
+        }
+
 
     class Meta:
         model = Product

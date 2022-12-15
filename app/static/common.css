@@ -1,0 +1,115 @@
+/* .brand-link {
+  background-color: #C5ADB5;
+}
+.sidebar-dark-navy .nav-sidebar>.nav-item>.nav-link.active, .sidebar-light-navy .nav-sidebar>.nav-item>.nav-link.active {
+  background-color: #C5ADB5;
+  color: white;
+}
+
+.fas::before {
+  color: #9f858e;
+}
+.timeline .fas::before {
+  color: #fff;
+}
+.nav-sidebar>.nav-item>.nav-link.active .fas::before {
+  color: #fff;
+}
+
+.btn-primary {
+  background-color: #7e5923;
+  border-color: #7e5923;
+}
+.btn-primary:hover,
+.btn-primary:active,
+.btn-primary:focus,
+.btn-primary.active {
+  background-color: #7e5923;
+  border-color: #7e5923;
+}
+
+.nav-tabs a.nav-link {
+  color:#442414 !important;
+}
+.breadcrumb-item a{
+  color:#442414 !important;
+}
+th.field-__str__ a, .field-account_name a, .field-title a, .field-username a, th.sorting a, th.sorting_asc a {
+  color:#442414 !important;
+}
+
+
+.selector-chosen h2 {
+  background-color: #7e5923;
+}
+a.selector-chooseall {
+  color: #7e5923 !important;
+  opacity: 0.85 !important;
+}
+a.selector-chooseall:hover {
+  opacity: 1 !important;
+}
+a.selector-clearall {
+  color: #7e5923 !important;
+  opacity: 0.55 !important;
+}
+a.selector-clearall:hover {
+  opacity: 0.75 !important;
+}
+
+
+
+/* Save and Add Another btn, Add a new Category btn*/
+
+/* .btn-info {
+  background-color: #7e5923;
+  border-color: #7e5923;
+  opacity: 0.75;
+}
+.btn-info:hover {
+  background-color: #7e5923;
+  border-color: #7e5923;
+  opacity: 1;
+}
+.btn-info:focus {
+  background-color: #7e5923 !important;
+  border-color: #7e5923 !important;
+  opacity: 1 !important;
+}
+
+.btn-success {
+  background-color: #7e5923;
+  border-color: #7e5923;
+  opacity: 0.75;
+}
+.btn-success:hover, .btn-success:focus {
+  background-color: #7e5923;
+  border-color: #7e5923;
+  opacity: 1;
+}
+
+
+.btn-danger {
+  background-color: transparent;
+  border-color: #7e5923;
+  color: #7e5923 !important;
+  opacity: 0.75;
+  border-width: 2px;
+  font-weight: 900;
+}
+.btn-danger:hover {
+  background-color: transparent;
+  border-color: #7e5923;
+  color: #7e5923 !important;
+  opacity: 1;
+  border-width: 2px;
+  font-weight: 900;
+} */
+
+
+.main-footer .float-right {
+  display: none !important;
+}
+.accent-primary .btn-link, .accent-primary .nav-tabs .nav-link, .accent-primary a:not(.dropdown-item):not(.btn-app):not(.nav-link):not(.brand-link):not(.page-link):not(.btn) {
+  color: #442414;
+} */
